@@ -18,12 +18,10 @@ public class Mission {
 
     @Override
     public String toString() {
-        return "Mission{" +
-                "name='" + name + '\'' +
+        return "'" + name + '\'' +
                 ", numSteps=" + numSteps +
                 ", isNight=" + isNight +
                 ", reward=" + reward +
-                ", baseRisk=" + baseRisk +
-                '}';
+                ", baseRisk=" + baseRisk;
     }
 }
