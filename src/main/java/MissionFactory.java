@@ -65,9 +65,9 @@ public class MissionFactory {
         for(int i = 0; i < numMissions; i++) {
             String name = "Mission " + (i+1);
             numSteps = generateRandomNumSteps();
-            double reward = generateReward();
             baseRisk = generateRandomRisk();
-            missions[i] = new Mission(name, numSteps, reward, baseRisk);
+            double maxReward = generateReward();
+            missions[i] = new Mission(name, numSteps, maxReward, baseRisk);
         }
     }
 }

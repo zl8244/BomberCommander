@@ -4,11 +4,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         MissionFactory missionFactory = new MissionFactory();
+
         missionFactory.generateMissions();
 
         Mission[] missions = missionFactory.getMissions();
 
-        boolean confirmLaunch = false;
+        boolean confirmLaunch;
         do {
             System.out.println("Pick a mission:");
             for (int i = 0; i < missions.length; i++) {
@@ -26,13 +27,13 @@ public class Main {
             int numBombers = scan.nextInt();
             chosenMission.setNumBombers(numBombers);
 
-            System.out.println("Here are the mission details:\n" + chosenMission);
+            System.out.println("Here are the mission details:\n" + chosenMission.getBriefing());
             System.out.println("Confirm launch?\n1) Yes\n2) No");
             int userConfirm = scan.nextInt();
             confirmLaunch = userConfirm == 1;
         } while(!confirmLaunch);
 
-        System.out.println("Godspeed men!");
+        System.out.println("Aircraft launch!");
 
         scan.close();
     }
