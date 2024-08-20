@@ -41,10 +41,34 @@ public class MissionFactory {
         return bd.doubleValue();
     }
 
+    private double nearestDivisibleByFive(double value) {
+        if(value % 5 == 0) return value;
+
+        int countUp = 0;
+        double valueUp = value;
+        int countDown = 0;
+        double valueDown = value;
+
+        do{
+            valueUp++;
+            countUp++;
+        } while(valueUp % 5 != 0);
+
+        do {
+            valueDown--;
+            countDown++;
+        } while(valueDown % 5 != 0);
+
+        if(countUp <= countDown) return valueUp;
+
+        return valueDown;
+    }
+
     private int generateRandomNumSteps() {
         Random randNumSteps = new Random();
         maxNumSteps += 1;
-        return randNumSteps.nextInt(maxNumSteps-minNumSteps)+minNumSteps;
+        int tempNumSteps = randNumSteps.nextInt(maxNumSteps-minNumSteps)+minNumSteps;
+        return (int)nearestDivisibleByFive(tempNumSteps);
     }
 
     private double generateRandomRisk() {
@@ -58,7 +82,8 @@ public class MissionFactory {
 
     private double generateReward() {
         double value = numSteps * (1+baseRisk);
-        return round(value, 0);
+        double roundedValue = round(value, 0);
+        return nearestDivisibleByFive(roundedValue);
     }
 
     public void generateMissions() {
