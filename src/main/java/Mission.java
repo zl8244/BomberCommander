@@ -4,6 +4,7 @@ public class Mission {
     private boolean isNight = false;
     private final double reward;
     private final double baseRisk;
+    private int numBombers;
 
     public Mission(String name, int numSteps, double reward, double baseRisk) {
         this.name = name;
@@ -16,12 +17,21 @@ public class Mission {
         this.isNight = isNight;
     }
 
+    public void setNumBombers(int numBombers) {
+        this.numBombers = numBombers;
+    }
+
+    public int getNumBombers() {
+        return numBombers;
+    }
+
     @Override
     public String toString() {
         return "'" + name + '\'' +
                 ", numSteps=" + numSteps +
                 ", isNight=" + isNight +
                 ", reward=" + reward +
-                ", baseRisk=" + baseRisk;
+                ", baseRisk=" + baseRisk +
+                ", numBombers=" + numBombers;
     }
 }
