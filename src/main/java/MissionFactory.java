@@ -5,10 +5,10 @@ import java.util.Random;
 public class MissionFactory {
     private int numMissions = 3;
     private final Mission[] missions;
-    private int minNumSteps = 10;
-    private int maxNumSteps = 100;
-    private double minRisk = 0.25;
-    private double maxRisk = 0.8;
+    private int minNumSteps = 100;
+    private int maxNumSteps = 300;
+    private double minRisk = 0.15;
+    private double maxRisk = 0.95;
     private int numSteps;
     private double baseRisk;
 
@@ -67,8 +67,7 @@ public class MissionFactory {
     private int generateRandomNumSteps() {
         Random randNumSteps = new Random();
         maxNumSteps += 1;
-        int tempNumSteps = randNumSteps.nextInt(maxNumSteps-minNumSteps)+minNumSteps;
-        return (int)nearestDivisibleByFive(tempNumSteps);
+        return randNumSteps.nextInt(maxNumSteps-minNumSteps)+minNumSteps;
     }
 
     private double generateRandomRisk() {
@@ -82,8 +81,7 @@ public class MissionFactory {
 
     private double generateReward() {
         double value = numSteps * (1+baseRisk);
-        double roundedValue = round(value, 0);
-        return nearestDivisibleByFive(roundedValue);
+        return round(value, 0);
     }
 
     public void generateMissions() {
@@ -92,6 +90,10 @@ public class MissionFactory {
             numSteps = generateRandomNumSteps();
             baseRisk = generateRandomRisk();
             double maxReward = generateReward();
+
+            numSteps = (int)nearestDivisibleByFive(numSteps);
+            maxReward = nearestDivisibleByFive(maxReward);
+
             missions[i] = new Mission(name, numSteps, maxReward, baseRisk);
         }
     }
