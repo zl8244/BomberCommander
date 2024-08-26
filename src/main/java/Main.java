@@ -33,7 +33,7 @@ public class Main {
             double risk = chosenMission.getBaseRisk();
 
             // Risk is halved if mission is taken at night
-            // But so if max possible reward
+            // But so is max possible reward (bombs less accurate so less reward)
             if(chosenMission.getIsNight()) {
                 risk = risk * 0.5;
                 double currentMaxReward = chosenMission.getMaxReward();
@@ -47,7 +47,7 @@ public class Main {
 
             // 0.05 is bare minimum risk after modifiers have been applied
             // Can't negate risk entirely
-            // That'd be like saying no planes have ever crashed...
+            // That'd be like saying no planes have ever crashed due to non-hostile actions
             if(risk < 0.05) {
                 risk = 0.05;
             }
@@ -66,11 +66,23 @@ public class Main {
         Random rand = new Random();
         ArrayList<MissionEvent> missionEvents = new ArrayList<>();
         for(int i = 1; i < chosenMission.getNumSteps()+1; i++) {
-            double randNum = rand.nextDouble();
-            randNum *= chosenMission.getNumBombers();
-            if(randNum > 1.0) {
-                randNum = 1.0;
+            double maxRand = 0;
+            double minRand = 1;
+            // Make numBombers number of dice rolls and get the max and min rolls
+            for(int j = 0; j < chosenMission.getNumBombers(); j++) {
+                double num = rand.nextDouble();
+                maxRand = Math.max(maxRand, num);
+                minRand = Math.min(minRand, num);
             }
+            /*
+            Get the difference of the max and min
+            If the range is within the risk, then the event triggers
+            i.e.
+            Range: |----------------------------| 0.46
+            Risk:  |---------------------------------------------| 0.8
+            The range can fit in the risk so the event triggers
+            */
+            double randNum = maxRand - minRand;
             if(randNum < chosenMission.getActualRisk() && bombersReturned > 0) {
                 missionEvents.add(new MissionEvent(i,1));
                 bombersReturned--;
