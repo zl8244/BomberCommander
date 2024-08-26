@@ -94,7 +94,14 @@ public class Main {
         }
 
         System.out.println(bombersReturned + " bombers returned.");
-        System.out.println(chosenMission.getMaxReward() + " reward has been granted.");
+
+        // Calculate actual reward received based on how many bombers returned
+        double actualReward = chosenMission.getMaxReward();
+        actualReward = actualReward * ((double)bombersReturned / chosenMission.getNumBombers());
+        actualReward = Utils.round(actualReward, 0);
+        actualReward = Utils.nearestDivisibleByFive(actualReward);
+
+        System.out.println(actualReward + " reward has been granted.");
 
         scan.close();
     }

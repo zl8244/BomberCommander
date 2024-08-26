@@ -16,15 +16,15 @@ public class Utils {
         int countDown = 0;
         double valueDown = value;
 
-        do{
+        while(valueUp % 5 != 0) {
             valueUp++;
             countUp++;
-        } while(valueUp % 5 != 0);
+        }
 
-        do {
+        while(valueDown % 5 != 0) {
             valueDown--;
             countDown++;
-        } while(valueDown % 5 != 0);
+        }
 
         if(countUp <= countDown) return valueUp;
 
