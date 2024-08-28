@@ -22,6 +22,22 @@ public class BomberBase {
         return credits;
     }
 
+    public void subBombers(int bombers) {
+        numBombers -= bombers;
+    }
+
+    public void addBombers(int bombers) {
+        numBombers += bombers;
+    }
+
+    public void addCredits(double reward) {
+        credits += reward;
+    }
+
+    public void subCredits(double cred) {
+        credits -= cred;
+    }
+
     public Mission[] getMissions() {
         return missions;
     }

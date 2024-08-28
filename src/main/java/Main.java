@@ -10,14 +10,20 @@ public class Main {
         bomberBase.generateMissions();
         Mission[] missions = bomberBase.getMissions();
 
+        System.out.println("credits: " + bomberBase.getCredits());
+        System.out.println("numBombers: " + bomberBase.getNumBombers());
+
         boolean confirmLaunch;
         Mission chosenMission;
         do {
-            System.out.println("Pick a mission:");
-            for (int i = 0; i < missions.length; i++) {
-                System.out.println((i + 1) + ") " + missions[i]);
-            }
-            int choice = scan.nextInt();
+            int choice;
+            do {
+                System.out.println("Pick a mission:");
+                for (int i = 0; i < missions.length; i++) {
+                    System.out.println((i + 1) + ") " + missions[i]);
+                }
+                choice = scan.nextInt();
+            } while(choice > missions.length);
             chosenMission = missions[choice - 1];
 
             System.out.println("Execute the mission at night?");
@@ -25,8 +31,12 @@ public class Main {
             int nightConfig = scan.nextInt();
             chosenMission.setIsNight(nightConfig == 1);
 
-            System.out.println("How many bombers do you want to assign?");
-            int numBombers = scan.nextInt();
+            int numBombers;
+            do {
+                System.out.println("How many bombers do you want to assign?");
+                System.out.println("(Max " + bomberBase.getNumBombers() + ")");
+                numBombers = scan.nextInt();
+            } while(numBombers > bomberBase.getNumBombers());
             chosenMission.setNumBombers(numBombers);
 
             double risk = chosenMission.getBaseRisk();
@@ -92,6 +102,8 @@ public class Main {
             System.out.println(event);
         }
 
+        int diff = chosenMission.getNumBombers() - bombersReturned;
+        bomberBase.subBombers(diff);
         System.out.println(bombersReturned + " bombers returned.");
 
         // Calculate actual reward received based on how many bombers returned
@@ -100,7 +112,11 @@ public class Main {
         actualReward = Utils.round(actualReward, 0);
         actualReward = Utils.nearestDivisibleByFive(actualReward);
 
+        bomberBase.addCredits(actualReward);
         System.out.println(actualReward + " reward has been granted.");
+
+        System.out.println("credits: " + bomberBase.getCredits());
+        System.out.println("numBombers: " + bomberBase.getNumBombers());
 
         scan.close();
     }
