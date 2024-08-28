@@ -5,11 +5,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        MissionFactory missionFactory = new MissionFactory();
 
-        missionFactory.generateMissions();
-
-        Mission[] missions = missionFactory.getMissions();
+        BomberBase bomberBase = new BomberBase();
+        bomberBase.generateMissions();
+        Mission[] missions = bomberBase.getMissions();
 
         boolean confirmLaunch;
         Mission chosenMission;
